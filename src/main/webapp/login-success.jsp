@@ -3,12 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<meta charset="ISO-8859-1">
+	<title>Successful Login!</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
- <div align="center">
-  <h1>You have logined successfully</h1>
- </div>
+	<div align="center" class="div-title">
+		<h1>You have logged in successfully</h1>
+	</div>
 </body>
 </html>

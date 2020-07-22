@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ipomoea.webapp.controller.UserCont;
-import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
 
 /**
