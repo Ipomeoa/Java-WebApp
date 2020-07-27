@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
 
@@ -35,6 +36,25 @@ public class UserCont {
 			}
 		} finally {
 			entityManager.close();
+		}
+	}
+
+	public void createUser(final User user) {
+		try {
+			if (fetchUserByUsername(user.getUsername()) != null) {
+				throw new Exception("User already exists for username " + user.getUsername());
+			}
+			final EntityManager entityManager = entityManagerFactory.createEntityManager();
+			try {
+				entityManager.getTransaction().begin();
+				entityManager.persist(user);
+				entityManager.getTransaction().commit();
+			} finally {
+				entityManager.close();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

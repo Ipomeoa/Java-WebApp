@@ -6,8 +6,8 @@
 		<class>com.ipomoea.webapp.model.User</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="CONFIG" />
-            <property name="eclipselink.target-database" value="MYSQL" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="eclipselink.target-database" value="MySQL" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 			<property name="javax.persistence.jdbc.password" value="1.KaktusSuppe"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sqrlwebapp"/>
 			<property name="javax.persistence.jdbc.user" value="sqrlwebapp"/>
