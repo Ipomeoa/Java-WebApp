@@ -20,15 +20,12 @@ public class RenderSuccessServlet extends HttpServlet {
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
+			System.out.println("Render success page.");
 			User user = null;
 			if (request.getSession(false) != null) {
 				user = (User) request.getSession(false).getAttribute(Constants.SESSION_NATIVE_APP_USER);
 			}
 
-			final HttpSession session = request.getSession(false);
-			session.setAttribute("username", user.getUsername());
-			session.setAttribute("firstname", user.getFirstName());
-			session.setAttribute("lastname", user.getLastName());
 			request.getRequestDispatcher("login-success.jsp").forward(request, response);
 		} catch (final RuntimeException e) {
 			response.setHeader("Location", "login");

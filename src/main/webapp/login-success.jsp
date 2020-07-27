@@ -3,7 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
 	<title>Successful Login!</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -11,7 +13,8 @@
 <%
 	if(session.getAttribute("username") == null){
 		System.out.println("Redirecting from success to login page");
-		request.getRequestDispatcher("login").forward(request, response);
+		response.setStatus(302);
+		response.setHeader("Location", "login");
 		return;
 	}
 	String name = "";

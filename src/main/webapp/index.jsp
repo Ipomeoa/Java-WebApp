@@ -13,9 +13,17 @@
 </head>
 
 <body>
+<%
+	String message = "";
+	if(request.getAttribute("loginerror")!=null){
+		message = (String) request.getAttribute("loginerror");
+	}
+%>
 	<div class="div-title"><h1>Login using Password Authentication</h1></div>
 	<p></p>
 	<div class="container col-md-3 col-md-offset-3" style="overflow: auto">
+		<%=message%>
+		<br/>
 		<form action="<%=request.getContextPath()%>/auth" method="post">
 			<div class="form-group">
 				<label for="uname">User Name:</label>

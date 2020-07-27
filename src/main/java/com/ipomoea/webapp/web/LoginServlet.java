@@ -37,9 +37,11 @@ public class LoginServlet extends HttpServlet {
     		response.setStatus(302);
         }
         else {//unsuccessfull authentication
+			request.setAttribute("loginerror", "<p style=\"color:red\">Invalid username or password!<p>");
     		System.out.println("failed authentication");
-			response.setHeader("Location", "login?error=0");
-    		response.setStatus(302);
+			//response.setHeader("Location", "login");
+    		//response.setStatus(302);
+			request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 
@@ -52,6 +54,9 @@ public class LoginServlet extends HttpServlet {
 			if(user.getPassword().equals(password)) {	//succesfull authentication
 		        final HttpSession session = request.getSession(true);
 	            session.setAttribute(Constants.SESSION_NATIVE_APP_USER, user);
+				session.setAttribute("username", user.getUsername());
+				session.setAttribute("firstname", user.getFirstName());
+				session.setAttribute("lastname", user.getLastName());
 	            return true;
 			}
 			else {	//Password does not match
