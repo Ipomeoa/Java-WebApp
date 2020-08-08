@@ -8,9 +8,31 @@
 			<property name="eclipselink.logging.level" value="CONFIG" />
             <property name="eclipselink.target-database" value="MySQL" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.password" value="1.KaktusSuppe"/>
+			<!-- <property name="javax.persistence.jdbc.password" value="1.KaktusSuppe"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sqrlwebapp"/>
-			<property name="javax.persistence.jdbc.user" value="sqrlwebapp"/>
+			<property name="javax.persistence.jdbc.user" value="sqrlwebapp"/> -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sqrl.cdlipo3fqpo3.eu-central-1.rds.amazonaws.com:3306/sqrl_impl" />
+            <property name="javax.persistence.jdbc.user" value="admin" />
+            <property name="javax.persistence.jdbc.password" value="AdminSQRLAWS" />
 		</properties>
    	</persistence-unit>
+	<!-- The java SQRL persistence unit -->
+	<persistence-unit name="javasqrl-persistence"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>com.github.sqrlserverjava.persistence.SqrlIdentity</class>
+		<class>com.github.sqrlserverjava.persistence.SqrlCorrelator</class>
+		<class>com.github.sqrlserverjava.persistence.SqrlUsedNutToken</class>
+		<properties>
+			<property name="eclipselink.logging.level" value="CONFIG" />
+            <property name="eclipselink.target-database" value="MYSQL" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+			<!-- <property name="javax.persistence.jdbc.password" value="1.KaktusSuppe"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sqrlwebapp"/>
+			<property name="javax.persistence.jdbc.user" value="sqrlwebapp"/> -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sqrl.cdlipo3fqpo3.eu-central-1.rds.amazonaws.com:3306/sqrl_impl" />
+            <property name="javax.persistence.jdbc.user" value="admin" />
+            <property name="javax.persistence.jdbc.password" value="AdminSQRLAWS" />
+		</properties>
+	</persistence-unit>
 </persistence>

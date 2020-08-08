@@ -6,3 +6,12 @@ body {
 .div-title{
 	margin: 50px;
 }
+.div-center{
+	margin-left: auto ;
+	margin-right: auto ;
+  align-items: center;
+}
+
+div.or {
+  width: 500px;
+}

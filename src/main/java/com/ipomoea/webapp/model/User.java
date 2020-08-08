@@ -46,11 +46,16 @@ public class User implements Serializable {
 		this.createdAt = new Date();
 	}
 
-	public User(final String firstName, final String lastName) {
+	public User(final String username, final String firstName, final String lastName) {
+		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.createdAt = new Date();
 	}
+
+    public int getId() {
+        return id;
+    }
 
     public String getUsername() {
         return username;

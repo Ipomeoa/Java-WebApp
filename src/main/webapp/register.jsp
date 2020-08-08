@@ -10,13 +10,13 @@
 	 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	 crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="icon" href="favicon.ico">
 </head>
 
 <body>
 <%
 	//check for error messages
 	String message = "";
-	System.out.println(request.getAttribute("registererror"));
 	if(request.getAttribute("registererror")!=null){
 		message = (String) request.getAttribute("registererror");
 	}
