@@ -158,17 +158,11 @@
 </script>
 
 <body>
-<%
-	String message = "";
-	if(request.getAttribute("loginerror")!=null){
-		message = (String) request.getAttribute("loginerror");
-	}
-%>
 <div class="container">
 	<div class="div-title div-center"><h1>Login using Password Authentication or SQRL</h1></div>
     <div class="row div-center justify-content-center">
         <div class="col-xs-6 div-center">
-				<%=message%>
+				<p><%=request.getAttribute("message")%></p>
 				<br/>
 				<form action="<%=request.getContextPath()%>/auth" method="post">
 					<div class="form-group">

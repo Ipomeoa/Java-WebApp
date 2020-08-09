@@ -9,7 +9,10 @@ body {
 .div-center{
 	margin-left: auto ;
 	margin-right: auto ;
-  align-items: center;
+	align-items: center;
+}
+.div-space{
+	margin: 20px;
 }
 
 div.or {

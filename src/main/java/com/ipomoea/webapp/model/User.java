@@ -19,7 +19,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @Column(name = "lastname")
     private String lastName;
@@ -53,7 +53,7 @@ public class User implements Serializable {
 		this.createdAt = new Date();
 	}
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

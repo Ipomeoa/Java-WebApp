@@ -54,7 +54,7 @@ public class SqrlLoginServlet extends HttpServlet {
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
 		logger.info(SqrlUtil.logEnterServlet(request));
-		System.out.println("Polling");
+		
 		try {
 			// TODO: all requests that get here must contain a correlator, right? requestContainsCorrelatorCookie
 			
@@ -70,10 +70,10 @@ public class SqrlLoginServlet extends HttpServlet {
 			} else if (!authComplete) {
 				logger.error("Error processing login: SQRL auth incomplete");
 			}
-			//RenderLoginPageServlet.redirectToLoginPageWithError(response, ErrorId.ERROR_SQRL_INTERNAL);
+			RenderLoginServlet.redirectToLoginPageWithError(response, ErrorId.ERROR_SQRL_INTERNAL);
 		} catch (final RuntimeException | SQLException | SqrlException e) {
 			logger.error("Error processing username/password login ", e);
-			//RenderLoginPageServlet.redirectToLoginPageWithError(response, ErrorId.SYSTEM_ERROR);
+			RenderLoginServlet.redirectToLoginPageWithError(response, ErrorId.SYSTEM_ERROR);
 		}
 	}
 
@@ -85,14 +85,14 @@ public class SqrlLoginServlet extends HttpServlet {
 			return false;
 		}
 		final SqrlAuthenticationStatus authStatus = sqrlCorrelator.getAuthenticationStatus();
-		System.out.print("check");
+		
 		if (authStatus.isUpdatesForThisCorrelatorComplete()) {
 			// Now that we are done using the correlator, we can delete the correlator
 			// note that If we didn't it would still get cleaned up later
 			sqrlServerOperations.deleteSqrlCorrelator(sqrlCorrelator);
 		}
 		if (!authStatus.isHappyPath()) {
-			//RenderLoginPageServlet.redirectToLoginPageWithError(response, ErrorId.ERROR_SQRL_INTERNAL);
+			RenderLoginServlet.redirectToLoginPageWithError(response, ErrorId.ERROR_SQRL_INTERNAL);
 			return true;
 		} else if (authStatus.isAuthComplete()) {
 			return completeSqrlAuthentication(sqrlCorrelator, request, response);
@@ -108,25 +108,27 @@ public class SqrlLoginServlet extends HttpServlet {
 			logger.warn("Correlator status return AUTH_COMPLETE but user isn't authenticated");
 			return false;
 		}
-		final HttpSession session = request.getSession(true); // TODO: shoult thsi be true?
+		final HttpSession session = request.getSession(true); // TODO: should this be true?
 		session.setAttribute(Constants.SESSION_SQRL_IDENTITY, sqrlIdentity);
 		// The user has been SQRL authenticated, is this an existing app user?
 		final String nativeUserXref = sqrlIdentity.getNativeUserXref();
-		User nativeAppUser = null;
+		User nativeUser = null;
 		if (nativeUserXref != null) {
-			nativeAppUser = UserCont.getInstance().fetchUserById(Long.parseLong(nativeUserXref));
+			nativeUser = UserCont.getInstance().fetchUserById(Long.parseLong(nativeUserXref));
 		}
-		final boolean existingAppUser = nativeAppUser != null;
-		if (existingAppUser) {
+
+		if (nativeUser != null) {
 			// The example app relies on server side session attribute to signal that the user has
-			// been authenticated and to indentify the user
-			session.setAttribute(Constants.SESSION_NATIVE_APP_USER, nativeAppUser);
-			request.getRequestDispatcher("login-success.jsp").forward(request, response);
+			// been authenticated and to identify the user
+			session.setAttribute(Constants.SESSION_NATIVE_APP_USER, nativeUser);
+    		response.setHeader("Location", "success");
+    		response.setStatus(302);
+			//request.getRequestDispatcher("login-success.jsp").forward(request, response);
 			return true;
 		} else {
 			// sqrlIdentity exists but NativeAppUser doesn't. Send them to enrollment page to see if they have a
 			// user name and password or are completely new
-			request.getRequestDispatcher("linkaccountoption.jsp").forward(request, response);
+			request.getRequestDispatcher("linkaccounts.jsp").forward(request, response);
 			return true;
 		}
 	}
