@@ -1,2 +1,2 @@
-# SQRLWebApp
-Web App using SQRL authentication
+# WebApp
+Web App using FIDO authentication

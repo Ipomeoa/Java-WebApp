@@ -7,10 +7,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.github.sqrlserverjava.util.SqrlUtil;
-import com.ipomoea.webapp.model.User;
 
 @WebServlet(urlPatterns = { "/success" })
 public class RenderSuccessServlet extends HttpServlet {
@@ -21,10 +17,6 @@ public class RenderSuccessServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			System.out.println("Render success page.");
-			User user = null;
-			if (request.getSession(false) != null) {
-				user = (User) request.getSession(false).getAttribute(Constants.SESSION_NATIVE_APP_USER);
-			}
 
 			request.getRequestDispatcher("login-success.jsp").forward(request, response);
 		} catch (final RuntimeException e) {

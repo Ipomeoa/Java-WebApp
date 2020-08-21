@@ -6,3 +6,14 @@ body {
 .div-title{
 	margin: 50px;
 }
+
+.box-gray{
+	box-sizing: border-box;
+	background-color: #BBB;
+	padding: 25px;
+	text-align: center
+}
+
+.error{
+	color: #A00;
+}
