@@ -46,11 +46,11 @@
    *   `publicKey` parameter to `navigator.credentials.create()`
    */
   function decodePublicKeyCredentialCreationOptions(request) {
-    const excludeCredentials = request.excludeCredentials.map(credential => extend(
+    /*const excludeCredentials = request.excludeCredentials.map(credential => extend(
       credential, {
       id: base64url.toByteArray(credential.id),
-    }));
-
+    }));*/
+	  
     const publicKeyCredentialCreationOptions = extend(
       request, {
       attestation: 'direct',
@@ -59,7 +59,7 @@
         id: base64url.toByteArray(request.user.id),
       }),
       challenge: base64url.toByteArray(request.challenge),
-      excludeCredentials,
+      //excludeCredentials,
     });
 
     return publicKeyCredentialCreationOptions;
@@ -90,7 +90,8 @@
    *   `publicKey` parameter to `navigator.credentials.get()`
    */
   function decodePublicKeyCredentialRequestOptions(request) {
-    const allowCredentials = request.allowCredentials && request.allowCredentials.map(credential => extend(
+	  console.log("request ", request);
+      const allowCredentials = request.allowCredentials && request.allowCredentials.map(credential => extend(
       credential, {
       id: base64url.toByteArray(credential.id),
     }));

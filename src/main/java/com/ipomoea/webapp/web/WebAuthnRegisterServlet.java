@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.yubico.webauthn.data.RelyingPartyIdentity;
+
 
 import com.ipomoea.webapp.webauthn.RegistrationStorage;
 import com.yubico.webauthn.RelyingParty;
@@ -34,6 +36,7 @@ public class WebAuthnRegisterServlet extends HttpServlet {
 		System.out.println("Register WebAuthn");
 
     	String username = request.getParameter("username");
+    	String displayName = request.getParameter("firstname") + " " + request.getParameter("lastname");
     	String credentialNickname = request.getParameter("inputNickname");
     	
     	// ToDo remove this part and check content before using
@@ -41,13 +44,8 @@ public class WebAuthnRegisterServlet extends HttpServlet {
     	credentialNickname = "credentialNickname";
     	// ToDo check if credentials have already been registered
 
-    	RelyingPartyIdentity rpIdentity = RelyingPartyIdentity.builder()
-    		    .id("ipomoea.net")
-    		    .name("WebApp FIDO")
-    		    .build();
-
 		RelyingParty rp = RelyingParty.builder()
-    		    .identity(rpIdentity)
+    		    .identity(Constants.DEFAULT_RP_ID)
     		    .credentialRepository(new RegistrationStorage())
     		    .build();
 		
@@ -56,18 +54,17 @@ public class WebAuthnRegisterServlet extends HttpServlet {
 		PublicKeyCredentialCreationOptions pkRequest = rp.startRegistration(StartRegistrationOptions.builder()
 		    .user(UserIdentity.builder()
 		        .name(username)
-		        .displayName(credentialNickname)
+		        .displayName(displayName)
 		        .id(new ByteArray(userHandle))
 		        .build())
 		    .build());
-		
+
 		ObjectMapper jsonMapper = new ObjectMapper()
 			    .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
 			    .setSerializationInclusion(Include.NON_ABSENT)
 			    .registerModule(new Jdk8Module());
 
 		String json = jsonMapper.writeValueAsString(pkRequest);
-		
 		
 		response.setContentType("application/json");
 		// Get the printwriter object from response to write the required json object to the output stream      
