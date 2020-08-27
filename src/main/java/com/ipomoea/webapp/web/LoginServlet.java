@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.ipomoea.webapp.controller.UserCont;
+import com.ipomoea.webapp.controller.UserController;
 import com.ipomoea.webapp.model.User;
 
 /**
@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
     	try {
         	String username = request.getParameter("username");
             String password = request.getParameter("password");
-			User user = UserCont.getInstance().fetchUserByUsername(username);
+			User user = UserController.getInstance().fetchUserByUsername(username);
 			
 			if(user.getPassword().equals(password)) {	//succesfull authentication
 		        final HttpSession session = request.getSession(true);

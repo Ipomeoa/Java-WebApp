@@ -9,12 +9,12 @@ import javax.persistence.Persistence;
 import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
 
-public class UserCont {
-	private static final UserCont	INSTANCE					= new UserCont();
+public class UserController {
+	private static final UserController	INSTANCE					= new UserController();
 	private static EntityManagerFactory	entityManagerFactory	= Persistence
 			.createEntityManagerFactory("webapp-persistence");
 	
-	public static UserCont getInstance() {
+	public static UserController getInstance() {
 		return INSTANCE;
 	}
 

@@ -1,19 +1,20 @@
 package com.ipomoea.webapp.webauthn;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.ipomoea.webapp.controller.UserCont;
+import com.ipomoea.webapp.controller.UserController;
 import com.yubico.webauthn.CredentialRepository;
 import com.yubico.webauthn.RegisteredCredential;
 import com.yubico.webauthn.data.ByteArray;
 import com.yubico.webauthn.data.PublicKeyCredentialDescriptor;
 
-public class RegistrationStorage implements CredentialRepository{
-	private static final UserCont	INSTANCE					= new UserCont();
+public class RegistrationController implements CredentialRepository{
+	private static final UserController	INSTANCE					= new UserController();
 	private static EntityManagerFactory	entityManagerFactory	= Persistence
 			.createEntityManagerFactory("webapp-persistence");
 
@@ -49,7 +50,8 @@ public class RegistrationStorage implements CredentialRepository{
 	public Set<RegisteredCredential> lookupAll(ByteArray credentialId) {
 		// TODO Auto-generated method stub
 		System.out.println("ToDo 5!");
-		return null;
+		Set<RegisteredCredential> setRC = Collections.emptySet();
+		return setRC;
 	}
 
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.ipomoea.webapp.controller.UserCont;
+import com.ipomoea.webapp.controller.UserController;
 import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
 
@@ -34,7 +34,7 @@ public class RegisterServlet extends HttpServlet {
     	String username = request.getParameter("username");
 		User user = null;
 		try {
-			user = UserCont.getInstance().fetchUserByUsername(username);
+			user = UserController.getInstance().fetchUserByUsername(username);
 		} catch (CustomException e) {
 			e.printStackTrace();
 		}
@@ -75,7 +75,7 @@ public class RegisterServlet extends HttpServlet {
     		user.setPassword(password);
     		user.setFirstName(firstname);
     		user.setLastName(lastname);
-			UserCont.getInstance().createUser(user);
+			UserController.getInstance().createUser(user);
 			
 			return true;
 		} catch (Exception e) {

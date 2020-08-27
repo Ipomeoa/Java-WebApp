@@ -79,8 +79,7 @@
                 
                 return webauthn.createCredential(request)
                 .then(webauthn.responseToObject)
-                .then(function (publicKeyCredential) { 
-                    console.log("publicKeyCredential ", publicKeyCredential);
+                .then(function (publicKeyCredential) {
         
                     url = 'webauthnregisterfinish';
                     return submitResponse(url, request.requestId, publicKeyCredential);

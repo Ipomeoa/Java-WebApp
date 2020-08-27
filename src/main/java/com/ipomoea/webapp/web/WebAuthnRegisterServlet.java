@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.yubico.webauthn.data.RelyingPartyIdentity;
 
 
-import com.ipomoea.webapp.webauthn.RegistrationStorage;
+import com.ipomoea.webapp.webauthn.RegistrationController;
 import com.yubico.webauthn.RelyingParty;
 import com.yubico.webauthn.StartRegistrationOptions;
 import com.yubico.webauthn.data.ByteArray;
@@ -43,15 +43,10 @@ public class WebAuthnRegisterServlet extends HttpServlet {
     	//username = "user123";
     	credentialNickname = "credentialNickname";
     	// ToDo check if credentials have already been registered
-
-		RelyingParty rp = RelyingParty.builder()
-    		    .identity(Constants.DEFAULT_RP_ID)
-    		    .credentialRepository(new RegistrationStorage())
-    		    .build();
 		
 		byte[] userHandle = new byte[64];
 		random.nextBytes(userHandle);
-		PublicKeyCredentialCreationOptions pkRequest = rp.startRegistration(StartRegistrationOptions.builder()
+		WebAuthnConfig.PK_REQUEST = WebAuthnConfig.RP.startRegistration(StartRegistrationOptions.builder()
 		    .user(UserIdentity.builder()
 		        .name(username)
 		        .displayName(displayName)
@@ -64,7 +59,7 @@ public class WebAuthnRegisterServlet extends HttpServlet {
 			    .setSerializationInclusion(Include.NON_ABSENT)
 			    .registerModule(new Jdk8Module());
 
-		String json = jsonMapper.writeValueAsString(pkRequest);
+		String json = jsonMapper.writeValueAsString(WebAuthnConfig.PK_REQUEST);
 		
 		response.setContentType("application/json");
 		// Get the printwriter object from response to write the required json object to the output stream      

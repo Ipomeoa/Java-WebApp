@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ipomoea.webapp.webauthn.RegistrationStorage;
+import com.ipomoea.webapp.webauthn.RegistrationController;
 import com.yubico.webauthn.FinishRegistrationOptions;
 import com.yubico.webauthn.RegistrationResult;
 import com.yubico.webauthn.RelyingParty;
@@ -41,20 +41,23 @@ public class WebAuthnRegisterFinishServlet extends HttpServlet {
     	String responseJson = request.getReader().lines().collect(Collectors.joining());
     	responseJson = responseJson.substring(14, responseJson.length()-1);
     	System.out.println("responseJson: " + responseJson);
+    	System.out.println("PK_REQUEST: " + WebAuthnConfig.PK_REQUEST);
     	PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc =
     	    PublicKeyCredential.parseRegistrationResponseJson(responseJson);
+    	System.out.println("pkc: " + pkc);
     	// Validate the response
-    	/**try {
-    	    RegistrationResult result = Constants.DEFAULT_RP_ID
+    	try {
+    	    RegistrationResult result = WebAuthnConfig.RP
     	    		.finishRegistration(FinishRegistrationOptions.builder()
-	    	        .request(request)
+	    	        .request(WebAuthnConfig.PK_REQUEST)
 	    	        .response(pkc)
 	    	        .build());
     	} catch (RegistrationFailedException e) {
     		System.out.println("WebAuthn registration failed");
     		e.printStackTrace();
-    	}**/
-    	
+    	}
+
+		System.out.println("To Do: storeCredential!!");
     	// To Do storeCredential("alice", result.getKeyId(), result.getPublicKeyCose());
     }
 }
