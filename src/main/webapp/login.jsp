@@ -199,7 +199,8 @@
 				<div>
 					<br/>
 					<p>Click the Button or scan the
-					<br/> QR code with a SQRL mobile app to log in.</p>
+					<br/> QR code with a SQRL mobile app to log in.
+					<br/><br/>If scanning the code does not work try reloading the page.</p>
 				</div>
 			</div>
         </div>

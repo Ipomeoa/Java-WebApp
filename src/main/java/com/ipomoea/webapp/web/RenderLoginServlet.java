@@ -66,6 +66,7 @@ public class RenderLoginServlet extends HttpServlet {
 					.append(";base64, ").append(Base64.getEncoder().encodeToString(imageInByteArray)).toString();
 			// TODO_DOC add doc FAQ link
 			final int pageRefreshSeconds = sqrlConfig.getNutValidityInSeconds() / 2;
+			//final int pageRefreshSeconds = 10;
 			request.setAttribute(Constants.JSP_PAGE_REFRESH_SECONDS, Integer.toString(pageRefreshSeconds));
 			request.setAttribute("sqrlqr64", b64);
 			final String sqrlUrl = pageData.getUrl().toString();

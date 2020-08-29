@@ -41,9 +41,11 @@ public class LogoutServlet extends HttpServlet {
 				response.addCookie(cookie);
 			}
 			
-			response.setStatus(302);
-			response.setHeader("Location", "login");
+			//response.setStatus(302);
+			//response.setHeader("Location", "login");
+			getServletContext().getRequestDispatcher("/index.jsp").forward (request, response);
 		} catch (final RuntimeException e) {
+			e.printStackTrace();
 			//ToDo show error
 		}
 	}
