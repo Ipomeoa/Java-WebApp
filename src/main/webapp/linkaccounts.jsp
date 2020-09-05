@@ -41,7 +41,7 @@
 			<br/>
 			<br/>
 			<br/>
-			<button onclick="location.href = 'login-success.jsp';">I don't have a username/password</button>
+			<button onclick="location.href = 'success';">I don't have a username/password</button>
 		</div>
         <div class="div-space">
         </div>

@@ -56,20 +56,24 @@ public class SqrlLoginServlet extends HttpServlet {
 		logger.info(SqrlUtil.logEnterServlet(request));
 		
 		try {
-			// TODO: all requests that get here must contain a correlator, right? requestContainsCorrelatorCookie
-			
 			// Web polling SQRL auth (non-CPS)
 			final boolean requestContainsCorrelatorCookie = sqrlServerOperations
 					.extractSqrlCorrelatorStringFromRequestCookie(request) != null;
+			
+			// Authenticate the SQRL user
 			final boolean authComplete = isSqrlWebRefreshAuthComplete(request, response);
+			
 			if (requestContainsCorrelatorCookie && authComplete) {
-				// All good, nothing else to do
+				// Authentication succeeded
 				return;
 			} else if (!requestContainsCorrelatorCookie) {
+				// Error processing login after SQRL auth: correlator cookie not found
 				logger.error("Error processing login after SQRL auth: correlator cookie not found");
 			} else if (!authComplete) {
+				// Error processing login: SQRL auth incomplete
 				logger.error("Error processing login: SQRL auth incomplete");
 			}
+			// If an Error was thrown render the login page with an error message
 			RenderLoginServlet.redirectToLoginPageWithError(response, ErrorId.ERROR_SQRL_INTERNAL);
 		} catch (final RuntimeException | SQLException | SqrlException e) {
 			logger.error("Error processing username/password login ", e);
@@ -87,8 +91,7 @@ public class SqrlLoginServlet extends HttpServlet {
 		final SqrlAuthenticationStatus authStatus = sqrlCorrelator.getAuthenticationStatus();
 		
 		if (authStatus.isUpdatesForThisCorrelatorComplete()) {
-			// Now that we are done using the correlator, we can delete the correlator
-			// note that If we didn't it would still get cleaned up later
+			// Delete the correlator, it is not needed anymore
 			sqrlServerOperations.deleteSqrlCorrelator(sqrlCorrelator);
 		}
 		if (!authStatus.isHappyPath()) {
@@ -108,7 +111,7 @@ public class SqrlLoginServlet extends HttpServlet {
 			logger.warn("Correlator status return AUTH_COMPLETE but user isn't authenticated");
 			return false;
 		}
-		final HttpSession session = request.getSession(true); // TODO: should this be true?
+		final HttpSession session = request.getSession(true);
 		session.setAttribute(Constants.SESSION_SQRL_IDENTITY, sqrlIdentity);
 		// The user has been SQRL authenticated, is this an existing app user?
 		final String nativeUserXref = sqrlIdentity.getNativeUserXref();

@@ -29,17 +29,54 @@ public class RenderLoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
+		//Set the message attribute to be an empty placeholder
+		request.setAttribute("message", " ");
+
+		//Make sure that no session is active anymore
+		final HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
 		
-		System.out.println("RenderLogin");
-		
-		//init SqrlConfig and SqrlServerOperations
+		//initialise SqrlConfig and SqrlServerOperations
 		if (sqrlConfig == null) {
 			sqrlConfig = SqrlConfigHelper.loadFromClasspath();
 		}
 		if (sqrlServerOperations == null && sqrlConfig != null) {
 			sqrlServerOperations = new SqrlServerOperations(sqrlConfig);
 		}
-		displayLoginPage(request, response);
+		
+		try {
+			//Set SQRL data
+			final AuthPageData pageData = sqrlServerOperations.browserFacingOperations().prepareSqrlAuthPageData(request, response, 150);
+			
+			// Generate SQRL QR code
+			final ByteArrayOutputStream baos = pageData.getQrCodeOutputStream();
+			baos.flush();
+			final byte[] imageInByteArray = baos.toByteArray();
+			baos.close();
+			final String sqrlqr64 = new StringBuilder("data:image/").append(pageData.getHtmlFileType(sqrlConfig))
+					.append(";base64, ").append(Base64.getEncoder().encodeToString(imageInByteArray)).toString();
+			// Get the remaining data needed to render the SQRL login page
+			final String sqrlUrl = pageData.getUrl().toString();
+			final String pageRefreshSeconds = Integer.toString(sqrlConfig.getNutValidityInSeconds() / 2);
+			String cpsEnabled = Boolean.toString(sqrlConfig.isEnableCps());
+			String correlator = pageData.getCorrelator();
+			
+			// Set the request attributes so the login page can access them
+			request.setAttribute(Constants.JSP_PAGE_REFRESH_SECONDS, pageRefreshSeconds);
+			request.setAttribute("sqrlqr64", sqrlqr64);
+			request.setAttribute("sqrlurl", sqrlUrl);
+			request.setAttribute("cpsEnabled", cpsEnabled);
+			request.setAttribute("correlator", correlator);
+			// Check for errors
+			checkForErrorState(request, response);
+			
+		} catch (SqrlException e) {
+			e.printStackTrace();
+		}
+		//Render the login page
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	public static void redirectToLoginPageWithError(final HttpServletResponse response, ErrorId errorId) {
@@ -48,44 +85,6 @@ public class RenderLoginServlet extends HttpServlet {
 		}
 		response.setHeader("Location", "login?error=" + errorId.getId());
 		response.setStatus(302);
-	}
-	
-	private void displayLoginPage(final HttpServletRequest request, final HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			request.setAttribute("message", "<p></p>");
-			final AuthPageData pageData = sqrlServerOperations.browserFacingOperations().prepareSqrlAuthPageData(request, response, 150);
-			final ByteArrayOutputStream baos = pageData.getQrCodeOutputStream();
-			baos.flush();
-			final byte[] imageInByteArray = baos.toByteArray();
-			baos.close();
-			
-			// Since this is being passed to the browser, we use regular Base64 encoding, NOT SQRL specific
-			// Base64URL encoding
-			final String b64 = new StringBuilder("data:image/").append(pageData.getHtmlFileType(sqrlConfig))
-					.append(";base64, ").append(Base64.getEncoder().encodeToString(imageInByteArray)).toString();
-			// TODO_DOC add doc FAQ link
-			final int pageRefreshSeconds = sqrlConfig.getNutValidityInSeconds() / 2;
-			//final int pageRefreshSeconds = 10;
-			request.setAttribute(Constants.JSP_PAGE_REFRESH_SECONDS, Integer.toString(pageRefreshSeconds));
-			request.setAttribute("sqrlqr64", b64);
-			final String sqrlUrl = pageData.getUrl().toString();
-			request.setAttribute("sqrlurl", sqrlUrl);
-			request.setAttribute("cpsEnabled", Boolean.toString(sqrlConfig.isEnableCps()));
-			request.setAttribute("cpsNotEnabled", Boolean.toString(!sqrlConfig.isEnableCps()));
-			// The url that will get sent to the SQRL client via CPS must include a cancel page (can) if case of failure
-			final String sqrlurlWithCan = sqrlUrl;
-			request.setAttribute("sqrlurlwithcan64", SqrlUtil.sqrlBase64UrlEncode(sqrlurlWithCan));
-			request.setAttribute("sqrlqrdesc", "Scan with mobile SQRL app");
-			request.setAttribute("correlator", pageData.getCorrelator());
-
-			checkForErrorState(request, response);
-		} catch (SqrlException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	private void checkForErrorState(final HttpServletRequest request, final HttpServletResponse response)
@@ -103,12 +102,12 @@ public class RenderLoginServlet extends HttpServlet {
 			displayErrorAndKillSession(request, errorMessage, errorId.isDisplayInRed());
 		}
 		catch(final Exception e){
+			e.printStackTrace();
 		}
 	}
 
-	private void displayErrorAndKillSession(final HttpServletRequest request, final String errorText,
-			final boolean displayInRed) {
-		// Set it so it gets displayed
+	private void displayErrorAndKillSession(final HttpServletRequest request, final String errorText, final boolean displayInRed) {
+		// Set error text to be displayed on the login.jsp
 		String content = errorText;
 		if (displayInRed) {
 			final StringBuilder buf = new StringBuilder("<font color='red'>");

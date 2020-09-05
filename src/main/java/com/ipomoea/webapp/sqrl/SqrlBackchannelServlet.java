@@ -36,6 +36,7 @@ public class SqrlBackchannelServlet extends HttpServlet {
 	@Override
 	protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("SqrlBackchannelServlet called");
 		try {
 			if (!initialized.get()) {
 				initialize();

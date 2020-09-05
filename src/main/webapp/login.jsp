@@ -55,7 +55,7 @@
 		setTimeout( function(){ cpsGifProbe.src = localhostRoot + Date.now() + '.gif';	}, 200 );
 	}
 	
-	function sqrlInProgress() {
+	function sqrlInProgressInterface() {
 		var sqrlButtonSrc = $("#sqrlButton").attr("src");
 		var showingSqrlQr = sqrlButtonSrc != "spinner.gif";
     	if(!showingSqrlQr) {
@@ -64,7 +64,7 @@
     	$("#sqrlButton").attr("src", "spinner.gif");
     	$("#cancel").hide();
     	$("#footer").hide();
-    	$("#subtitle").hide();
+    	$("#errormessage").hide();
     	$("#uplogin").hide();
     	$("#sqrlQrRow").hide();
     	$("#or1").hide();
@@ -72,8 +72,8 @@
     	$("#sqrlImg").hide();
         instruction.innerText = "Waiting for SQRL client";
 		$("#cancel").show();
-    	if(subtitle.innerText.indexOf("rror") >=0 ) {
-    		subtitle.innerText = "";
+    	if(errormessage.innerText.indexOf("rror") >=0 ) {
+    		errormessage.innerText = "";
     	}
     	if(<%=(String) request.getAttribute("cpsEnabled")%>) {
     		cpsGifProbe.onerror();	// try to connect to the SQRL client on localhost if possible (CPS)
@@ -135,7 +135,7 @@
 				// The user scanned the QR code and sqrl auth is in progress
 				instruction.innerText = "Communicating with SQRL client";
 				subsocket.push(atmosphere.util.stringifyJSON({ state: "COMMUNICATING" , correlator: "<%=(String) request.getAttribute("correlator")%>"}));
-				sqrlInProgress();
+				sqrlInProgressInterface();
 			} else {
 				console.error("received unknown state from server: " + statusText);
 				subsocket.close();
@@ -162,7 +162,7 @@
 	<div class="div-title div-center"><h1>Login using Password Authentication or SQRL</h1></div>
     <div class="row div-center justify-content-center">
         <div class="col-xs-6 div-center">
-				<p><%=request.getAttribute("message")%></p>
+				<p id="errormessage"><%=request.getAttribute("message")%></p>
 				<br/>
 				<form action="<%=request.getContextPath()%>/auth" method="post">
 					<div class="form-group">
@@ -184,8 +184,9 @@
 			<h5><i> -- or --</i></h5>
         </div>
         <div class="col-xs-6 div-center">
+			<h4 id="instruction"> </h4>
 			<div>
-				<a href="<%=(String) request.getAttribute("sqrlurl")%>"  onclick="sqrlInProgress();return true;" >
+				<a href="<%=(String) request.getAttribute("sqrlurl")%>"  onclick="sqrlInProgressInterface();return true;" >
 					<img id="sqrlButton" src="signInSqrl.png" alt="Click to sign in with SQRL" /></a>
 				<br/>
 				<a id="cancel"  href="login?error=8">Cancel SQRL authentication</a>
@@ -194,7 +195,7 @@
 			<div id="sqrlQrRow">
 				<div>
 					<img src="<%=(String) request.getAttribute("sqrlqr64")%>"
-			        	alt="<%=(String) request.getAttribute("sqrlqrdesc")%>" />
+			        	alt="Scan QR code with mobile SQRL app!" />
 				</div>
 				<div>
 					<br/>

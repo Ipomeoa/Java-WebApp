@@ -4,6 +4,6 @@
     <!-- TODO: change this key for a real deployment -->
     <aesKeyBase64>DhMncY4ErDcLRfwfyeN02Q==</aesKeyBase64>
     <!-- <aesKeyBase64>GgEQQc+VSOeoSVTzpkeHQf7FZzl2l83ngR3ycBCC1A0=</aesKeyBase64> -->
-    <!-- <enableCps>false</enableCps>  -->
+    <enableCps>false</enableCps>
     <cpsCancelUri>login?error=8</cpsCancelUri>
 </sqrlConfig>
