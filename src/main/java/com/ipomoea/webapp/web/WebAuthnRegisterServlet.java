@@ -32,18 +32,11 @@ public class WebAuthnRegisterServlet extends HttpServlet {
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    	
-		System.out.println("Register WebAuthn");
-
+		// Get parameters needed for the creation of the registration request
     	String username = request.getParameter("username");
     	String displayName = request.getParameter("firstname") + " " + request.getParameter("lastname");
-    	String credentialNickname = request.getParameter("inputNickname");
     	
-    	// ToDo remove this part and check content before using
-    	//username = "user123";
-    	credentialNickname = "credentialNickname";
-    	// ToDo check if credentials have already been registered
-		
+    	// Create PublicKeyCredentialCreationOptions and store the instance for future use
 		byte[] userHandle = new byte[64];
 		random.nextBytes(userHandle);
 		WebAuthnConfig.PK_REQUEST = WebAuthnConfig.RP.startRegistration(StartRegistrationOptions.builder()
@@ -54,17 +47,16 @@ public class WebAuthnRegisterServlet extends HttpServlet {
 		        .build())
 		    .build());
 
+		// Convert PublicKeyCredentialCreationOptions to JSON to send to the frontend
 		ObjectMapper jsonMapper = new ObjectMapper()
 			    .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
 			    .setSerializationInclusion(Include.NON_ABSENT)
 			    .registerModule(new Jdk8Module());
-
 		String json = jsonMapper.writeValueAsString(WebAuthnConfig.PK_REQUEST);
 		
-		response.setContentType("application/json");
-		// Get the printwriter object from response to write the required json object to the output stream      
+		// Set response content type and add PublicKeyCredentialCreationOptions to the response
+		response.setContentType("application/json");  
 		PrintWriter out = response.getWriter();
-		// Assuming your json object is **jsonObject**, perform the following, it will return your json object  
 		out.print(json);
 		out.flush();
     }

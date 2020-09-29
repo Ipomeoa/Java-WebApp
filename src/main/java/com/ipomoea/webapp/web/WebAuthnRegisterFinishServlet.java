@@ -40,24 +40,22 @@ public class WebAuthnRegisterFinishServlet extends HttpServlet {
     	// Get the response from the client
     	String responseJson = request.getReader().lines().collect(Collectors.joining());
     	responseJson = responseJson.substring(14, responseJson.length()-1);
-    	System.out.println("responseJson: " + responseJson);
-    	System.out.println("PK_REQUEST: " + WebAuthnConfig.PK_REQUEST);
+
     	PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc =
     	    PublicKeyCredential.parseRegistrationResponseJson(responseJson);
-    	System.out.println("pkc: " + pkc);
+
     	// Validate the response
     	try {
+    		FinishRegistrationOptions fro = FinishRegistrationOptions.builder()
+		        .request(WebAuthnConfig.PK_REQUEST)
+		        .response(pkc)
+		        .build();
     	    RegistrationResult result = WebAuthnConfig.RP
-    	    		.finishRegistration(FinishRegistrationOptions.builder()
-	    	        .request(WebAuthnConfig.PK_REQUEST)
-	    	        .response(pkc)
-	    	        .build());
+    	    		.finishRegistration(fro);
     	} catch (RegistrationFailedException e) {
-    		System.out.println("WebAuthn registration failed");
     		e.printStackTrace();
     	}
-
-		System.out.println("To Do: storeCredential!!");
-    	// To Do storeCredential("alice", result.getKeyId(), result.getPublicKeyCose());
+    	
+    	// TODO storeCredential("name", result.getKeyId(), result.getPublicKeyCose());
     }
 }

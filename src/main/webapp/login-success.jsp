@@ -31,16 +31,13 @@
             }
         }
     	
+        // Submit a response to the backend
         function submitResponse(url, requestId, response) {
-            console.log('submitResponse', url, requestId, response);
-    
             var token = $("meta[name='_csrf']").attr("content"); 
-    
             const body = {
                 requestId,
                 credential: response,
             };
-            console.log('body', JSON.stringify(body));
             
             return fetch(url, {
                 method: 'POST',
@@ -51,45 +48,43 @@
             }).then(response => response.json())
             ;
         }
-    
+    	
+        // Register a security key
         function register() {
             $('#takeAction').show();
-            const username = '[[${#authentication.getPrincipal().getUsername()}]]';
-            const displayName = '[[${#authentication.getPrincipal().getUsername()}]]';
+            const username = '<%=(String) session.getAttribute("username")%>';
+            const displayName = '<%=(String) session.getAttribute("username")%>';
             const credentialNickname = $("#inputNickname").val();
             const requireResidentKey = true;
-    
-            var token = $("meta[name='_csrf']").attr("content");
+    		
+            // Call the WebAuthnRegisterServlet to initiate the registration process by creationg the publicKeyCreateCredentialOptions
             return fetch('webauthnregister', {
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': token
+                    'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content")
                 },
                 body: new URLSearchParams({
-                    username,
-                    displayName,
-                    credentialNickname,
-                    requireResidentKey,
+                    username, displayName, credentialNickname, requireResidentKey,
                 })
-                
             })
             .then(response => response.json())
             .then(function(request) {
-                console.log('request succeeded with JSON response', request)
-                
+                console.log('request', request);
+                // Use the code from webauth.js to handle communication with the authenticator and to receive the publicKeyCredential
+                // If the credentials have been received send them to the WebAuthnRegisterFinishServlet, if not handle the error
                 return webauthn.createCredential(request)
-                .then(webauthn.responseToObject)
-                .then(function (publicKeyCredential) {
-        
-                    url = 'webauthnregisterfinish';
-                    return submitResponse(url, request.requestId, publicKeyCredential);
-                })
-                .catch(error => {
-                    throw error;
-                })
-                ;
+	                .then(webauthn.responseToObject)
+	                .then(function (publicKeyCredential) {
+	                    url = 'webauthnregisterfinish';
+	                    return submitResponse(url, request.requestId, publicKeyCredential);
+	                })
+	                .catch(error => {
+	                    throw error;
+	                })
+	                ;
             })
             .then(data => {
+            	// Update UI and Display new key in the list of registered Keys
                 $('#takeAction').hide();
                 console.log(data);
                 setStatus("Success!", true);
@@ -105,6 +100,7 @@
                 return data;
             })
             .catch(error => {
+            	//Error handling
                 $('#takeAction').hide();
                 console.log('register', error);
                 setStatus(error.message, false);
@@ -160,8 +156,6 @@
 	        </thead>
 	        <tbody id="keys">
 	            <tr th:each="registration : ${registrations}" >
-	                <td><span th:text="${registration.credentialNickname.get()}"> NickName </span></td>
-	                <td><span th:text="${registration.registrationTime}"> Registered </span></td>
 	            </tr>
 	        </tbody>
 	    </table>

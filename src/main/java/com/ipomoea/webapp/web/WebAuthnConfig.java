@@ -7,7 +7,7 @@ import com.yubico.webauthn.data.RelyingPartyIdentity;
 
 public class WebAuthnConfig {
     public static final RelyingPartyIdentity DEFAULT_RP_ID
-    = RelyingPartyIdentity.builder().id("localhost").name("WebApp WebAuthn").build();
+    		= RelyingPartyIdentity.builder().id("localhost").name("WebApp WebAuthn").build();
     
 	public static final RelyingParty RP = RelyingParty.builder()
 		    .identity(DEFAULT_RP_ID)
