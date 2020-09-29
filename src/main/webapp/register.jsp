@@ -32,19 +32,16 @@
 		    name="username" required>
 		    </div>
 			<div class="form-group">
-				<label for="uname">Password *:</label> <input type="password"
-				 class="form-control" id="password" placeholder="Password"
-				 name="password" required>
+				<label for="uname">Password *:</label>
+				<input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
 			</div>
 			<div class="form-group">
 				<label for="uname">First Name:</label>
-				<input type="text" class="form-control" id="firstname" placeholder="First Name"
-		    name="username">
+				<input type="text" class="form-control" id="firstname" placeholder="First Name" name="firstname">
 		    </div>
 			<div class="form-group">
 				<label for="uname">Last Name:</label>
-				<input type="text" class="form-control" id="lastname" placeholder="Last Name"
-		    name="username">
+				<input type="text" class="form-control" id="lastname" placeholder="Last Name" name="lastname">
 		    </div>
 		    <p>* mandatory fields</p>
 			<button type="submit" class="btn btn-primary">Submit</button>

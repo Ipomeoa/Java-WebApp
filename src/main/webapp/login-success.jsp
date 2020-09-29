@@ -125,18 +125,18 @@
 	if(session.getAttribute("firstname")!=null){
 		name += " "+session.getAttribute("lastname");
 	}
+	System.out.println(name);
+	if(name.length()==0){
+		name = "You did not insert your first and/or last name when registering.";
+	}
 %>
 	
 	<div align="center" class="div-title">
 		<h1>You have logged in successfully!</h1>
 		<p>Hello<%=name%>.</p>
 		<%
-			String text = "";
-			if(name.length()==0){
-				text = "You did not insert your first and/or last name when registering.";
-			}
 		%>
-		<p><%=text%></p>
+		<p><%=name%></p>
 		<p>You are logged in with the username: <%=(String) session.getAttribute("username")%></p>
 		<p><a href="logout">Logout</a></p>
 	</div>
