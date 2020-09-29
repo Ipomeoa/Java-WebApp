@@ -13,6 +13,10 @@ import com.yubico.webauthn.RegisteredCredential;
 import com.yubico.webauthn.data.ByteArray;
 import com.yubico.webauthn.data.PublicKeyCredentialDescriptor;
 
+/**
+ * @author Marie-Luise Lux
+ */
+
 public class RegistrationController implements CredentialRepository{
 	private static final UserController	INSTANCE					= new UserController();
 	private static EntityManagerFactory	entityManagerFactory	= Persistence

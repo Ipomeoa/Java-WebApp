@@ -25,6 +25,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.*;
 
+/**
+ * @author Marie-Luise Lux
+ */
+
 @WebServlet(urlPatterns = { "/webauthnregister" })
 public class WebAuthnRegisterServlet extends HttpServlet {
     private static final long serialVersionUID = 2;

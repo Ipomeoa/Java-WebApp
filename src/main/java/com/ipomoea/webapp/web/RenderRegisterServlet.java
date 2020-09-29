@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author Marie-Luise Lux
+ */
+
 @WebServlet(urlPatterns = { "/renderreg" })
 public class RenderRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 4;

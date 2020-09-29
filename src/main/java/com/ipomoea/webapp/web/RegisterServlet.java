@@ -15,7 +15,7 @@ import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
 
 /**
- * @email Ramesh Fadatare
+ * @author Marie-Luise Lux
  */
 
 @WebServlet(urlPatterns = {"/register"})

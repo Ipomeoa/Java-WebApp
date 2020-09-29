@@ -3,6 +3,10 @@ package com.ipomoea.webapp.web;
 import com.yubico.webauthn.data.PublicKeyCredentialCreationOptions;
 import com.yubico.webauthn.data.RelyingPartyIdentity;
 
+/**
+ * @author Marie-Luise Lux
+ */
+
 public class Constants {
 	private Constants() {
 	}

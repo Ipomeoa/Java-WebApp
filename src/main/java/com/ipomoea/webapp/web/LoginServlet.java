@@ -13,7 +13,7 @@ import com.ipomoea.webapp.controller.UserController;
 import com.ipomoea.webapp.model.User;
 
 /**
- * @email Ramesh Fadatare
+ * @author Marie-Luise Lux
  */
 
 @WebServlet("/auth")
@@ -30,12 +30,12 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("Authenticating User");
         boolean auth = authenticate(request, response);
         
-        if(auth) {//succesfull authentication
+        if(auth) {//successful authentication
     		System.out.println("successfull authentication");
     		response.setHeader("Location", "success");
     		response.setStatus(302);
         }
-        else {//unsuccessfull authentication
+        else {//unsuccessful authentication
 			request.setAttribute("loginerror", "<p style=\"color:red\">Invalid username or password!<p>");
     		System.out.println("failed authentication");
 			//response.setHeader("Location", "login");
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("password");
 			User user = UserController.getInstance().fetchUserByUsername(username);
 			
-			if(user.getPassword().equals(password)) {	//succesfull authentication
+			if(user.getPassword().equals(password)) {	//successful authentication
 		        final HttpSession session = request.getSession(true);
 	            session.setAttribute(Constants.SESSION_NATIVE_APP_USER, user);
 				session.setAttribute("username", user.getUsername());

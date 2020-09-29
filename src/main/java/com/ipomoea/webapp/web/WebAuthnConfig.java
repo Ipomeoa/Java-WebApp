@@ -5,6 +5,10 @@ import com.yubico.webauthn.RelyingParty;
 import com.yubico.webauthn.data.PublicKeyCredentialCreationOptions;
 import com.yubico.webauthn.data.RelyingPartyIdentity;
 
+/**
+ * @author Marie-Luise Lux
+ */
+
 public class WebAuthnConfig {
     public static final RelyingPartyIdentity DEFAULT_RP_ID
     		= RelyingPartyIdentity.builder().id("localhost").name("WebApp WebAuthn").build();

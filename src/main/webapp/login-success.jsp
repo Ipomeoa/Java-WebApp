@@ -7,6 +7,7 @@
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 	<meta content="utf-8" http-equiv="encoding">
 	<title>Successful Login!</title>
+	<meta name="author" content="Marie-Luise Lux">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet"
 	 href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"

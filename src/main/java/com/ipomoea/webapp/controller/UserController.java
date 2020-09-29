@@ -9,6 +9,10 @@ import javax.persistence.Persistence;
 import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
 
+/**
+ * @author Marie-Luise Lux
+ */
+
 public class UserController {
 	private static final UserController	INSTANCE					= new UserController();
 	private static EntityManagerFactory	entityManagerFactory	= Persistence
