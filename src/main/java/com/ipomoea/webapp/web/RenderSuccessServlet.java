@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.web;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.IOException;
 
@@ -21,6 +24,7 @@ public class RenderSuccessServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			System.out.println("Render success page.");
+			
 			User user = null;
 			if (request.getSession(false) != null) {
 				user = (User) request.getSession(false).getAttribute(Constants.SESSION_NATIVE_APP_USER);

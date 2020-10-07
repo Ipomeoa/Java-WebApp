@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.web;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.IOException;
 
@@ -14,9 +17,6 @@ import com.ipomoea.webapp.controller.UserCont;
 import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
 
-/**
- * @email Ramesh Fadatare
- */
 
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
@@ -50,16 +50,12 @@ public class RegisterServlet extends HttpServlet {
 	        else {//unsuccessfull registration
 	        	request.setAttribute("registererror", "<p style=\"color:red\">An unexpected error occoured. Please contact the system admin.<p>");
 	    		System.out.println("failed registration");
-				//response.setHeader("Location", "renderreg?error=0");
-	    		//response.setStatus(302);
 				request.getRequestDispatcher("register.jsp").forward(request, response);
 	        }
 		}
 		else {//If username is taken
     		System.out.println("username already taken");
     		request.setAttribute("registererror", "<p style=\"color:red\">The choosen username has already been taken!<p>");
-			//response.setHeader("Location", "renderreg?error=0");
-    		//response.setStatus(302);
 			request.getRequestDispatcher("register.jsp").forward(request, response);
 		}
     }

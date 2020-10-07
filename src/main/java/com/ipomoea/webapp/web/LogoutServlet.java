@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.web;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.IOException;
 
@@ -9,9 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-/**
- * @email Ramesh Fadatare
- */
 
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
@@ -44,7 +44,7 @@ public class LogoutServlet extends HttpServlet {
 			response.setStatus(302);
 			response.setHeader("Location", "login");
 		} catch (final RuntimeException e) {
-			//ToDo show error
+			e.printStackTrace();
 		}
 	}
 }

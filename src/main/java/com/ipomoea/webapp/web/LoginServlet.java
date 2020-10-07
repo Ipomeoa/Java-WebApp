@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.web;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.IOException;
 import com.ipomoea.webapp.web.Constants;
@@ -12,10 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.ipomoea.webapp.controller.UserCont;
 import com.ipomoea.webapp.model.User;
-
-/**
- * @email Ramesh Fadatare
- */
 
 @WebServlet("/auth")
 public class LoginServlet extends HttpServlet {

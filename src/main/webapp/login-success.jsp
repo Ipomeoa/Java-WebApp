@@ -5,8 +5,9 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-<meta content="utf-8" http-equiv="encoding">
+	<meta content="utf-8" http-equiv="encoding">
 	<title>Successful Login!</title>
+	<meta name="author" content="Marie-Luise Lux">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
