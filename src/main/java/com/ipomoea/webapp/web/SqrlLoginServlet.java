@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.web;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,18 +27,6 @@ import com.github.sqrlserverjava.util.SqrlUtil;
 import com.ipomoea.webapp.controller.UserCont;
 import com.ipomoea.webapp.model.User;
 
-/**
- * Once SQRL auth is initiated, the browser polls the server to understand when SQRL auth is complete; once the browser
- * receives that message, it sends the user here so we can setup the app session based on the SQRL ID.
- * </p>
- * If this is the first time the user has authenticated via SQRL, the user will be sent to the linkaccountoption.jsp
- * where they can optionally link their SQRL account to an existing username/password account.
- * </p>
- * If the user has previously authenticated via SQRL, then the user is sent to the app page
- *
- * @author Dave Badia
- *
- */
 @WebServlet(urlPatterns = { "/sqrllogin" }, loadOnStartup = 1)
 public class SqrlLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 5609899766821704630L;

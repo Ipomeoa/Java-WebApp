@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.controller;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.util.List;
 

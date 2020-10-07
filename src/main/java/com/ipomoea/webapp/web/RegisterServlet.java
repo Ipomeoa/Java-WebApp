@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.web;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.IOException;
 
@@ -11,10 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.ipomoea.webapp.controller.UserCont;
 import com.ipomoea.webapp.exception.CustomException;
 import com.ipomoea.webapp.model.User;
-
-/**
- * @email Ramesh Fadatare
- */
 
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {

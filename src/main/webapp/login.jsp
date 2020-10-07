@@ -8,6 +8,7 @@
 	<meta charset="ISO-8859-1">
 	<meta http-equiv="refresh" content="<%=request.getAttribute(com.ipomoea.webapp.web.Constants.JSP_PAGE_REFRESH_SECONDS)%>">
 	<title>SQRL Authentication</title>
+	<meta name="author" content="Marie-Luise Lux">
 	<link rel="stylesheet"
 	 href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"

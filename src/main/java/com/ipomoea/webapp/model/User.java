@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.model;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.Serializable;
 import java.util.Date;

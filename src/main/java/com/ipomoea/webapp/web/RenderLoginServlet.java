@@ -1,4 +1,7 @@
 package com.ipomoea.webapp.web;
+/**
+ * @author Marie-Luise Lux
+ */
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,7 +12,6 @@ import com.github.sqrlserverjava.SqrlConfig;
 import com.github.sqrlserverjava.SqrlServerOperations;
 import com.github.sqrlserverjava.exception.SqrlException;
 import com.github.sqrlserverjava.util.SqrlConfigHelper;
-import com.github.sqrlserverjava.util.SqrlUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

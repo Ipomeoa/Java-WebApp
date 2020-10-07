@@ -18,12 +18,6 @@ import com.github.sqrlserverjava.SqrlServerOperations;
 import com.github.sqrlserverjava.exception.SqrlException;
 import com.github.sqrlserverjava.util.SqrlConfigHelper;
 
-/**
- * The backchannel servlet will handle SQRL client calls only. No user side html is served from here.
- *
- * @author Dave Badia
- *
- */
 
 @WebServlet(urlPatterns = { "/sqrlbc" })
 public class SqrlBackchannelServlet extends HttpServlet {
